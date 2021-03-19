@@ -27,6 +27,14 @@ export class EntityManager {
         }
     }
 
+    public activate(entity: Entity, b: boolean): void {
+        const i = this.entities.indexOf(entity);
+
+        if (i !== -1) {
+            this.entities.splice(i, 1);
+        }
+    }
+
     private generateName(): string {
         this.ids += 1;
 

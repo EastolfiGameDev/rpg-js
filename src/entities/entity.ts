@@ -1,4 +1,4 @@
-import { Vector3, Quaternion } from 'three';
+import { Vector3, Quaternion, Object3D } from 'three';
 
 import { Component } from './component';
 import { EntityManager } from './entity.manager';
@@ -6,9 +6,10 @@ import { EntityManager } from './entity.manager';
 export class Entity {
     public position = new Vector3();
     public rotation = new Quaternion();
+    public mesh: Object3D;
 
     private name: string = null;
-    private parent: Entity | EntityManager = null;
+    private parent: /*Entity | */EntityManager = null;
     private components: {[name: string]: Component} = {};
     private handlers = {};
 
@@ -28,7 +29,7 @@ export class Entity {
         this.name = name;
     }
 
-    public setParent(parent: Entity | EntityManager): void {
+    public setParent(parent: /*Entity | */EntityManager): void {
         this.parent = parent;
     }
 
@@ -40,6 +41,10 @@ export class Entity {
         for (let key in this.components) {
             this.components[key].update(timeElapsed);
         }
+    }
+
+    public activate(b: boolean): void {
+        this.parent.activate(this, b);
     }
 
     public setPosition(position: Vector3): void {
@@ -57,5 +62,5 @@ export class Entity {
         //     topic: 'update.rotation',
         //     value: this._rotation,
         // });
-      }
+    }
 }

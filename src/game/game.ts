@@ -5,6 +5,7 @@ import { ThirdPersonCamera } from '../entities/camera/third-person.camera';
 import { Entity } from '../entities/entity';
 import { EntityManager } from '../entities/entity.manager';
 import { PlayerEntity } from '../entities/player/player.entity';
+import { WorldManager } from './world';
 
 const _VS = `
 varying vec3 vWorldPosition;
@@ -52,6 +53,8 @@ export class RpgGame {
 
         this.loadPlayer();
         this.loadSky();
+        const world = new WorldManager();
+        world.addFoliage(this.scene, this.entityManager);
 
         this.process();
     }

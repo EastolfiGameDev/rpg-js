@@ -3,7 +3,7 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 
 import { Component } from '../component';
 import { PlayerControllerInput } from './player.input';
-import { PlayerStateMachine } from './player.state';
+import { PlayerStateMachine } from './player.fsm';
 
 interface Animation {
     clip: AnimationClip;
@@ -179,6 +179,7 @@ export class PlayerController extends Component {
 
             // broadcast
 
+            // Make general
             this.mixer = new AnimationMixer(this.target);
 
             const onAnimationLoad = (name: string, animation: Group) => {
@@ -196,6 +197,10 @@ export class PlayerController extends Component {
             const loader = new FBXLoader(this.manager);
             loader.setPath(this.RESOURCES_PATH);
             loader.load('Sword And Shield Idle.fbx', (animation: Group) => onAnimationLoad('idle', animation));
+            loader.load('Sword And Shield Walk.fbx', (animation: Group) => onAnimationLoad('walk', animation));
+            loader.load('Sword And Shield Run.fbx', (animation: Group) => onAnimationLoad('run', animation));
+            loader.load('Sword And Shield Slash.fbx', (animation: Group) => onAnimationLoad('attack', animation));
+            loader.load('Sword And Shield Death.fbx', (animation: Group) => onAnimationLoad('death', animation));
         });
     }
 }

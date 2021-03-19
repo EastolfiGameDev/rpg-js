@@ -1,25 +1,6 @@
-import { FiniteStateMachine } from '../../state-machine/fsm';
-import { State } from '../../state-machine/state';
-
-import { PlayerControllerProxy } from './player.controller';
-import { PlayerControllerInput } from './player.input';
-
-export class PlayerStateMachine extends FiniteStateMachine {
-    public proxy: PlayerControllerProxy;
-
-    constructor(proxy: PlayerControllerProxy) {
-        super();
-
-        this.proxy = proxy;
-
-        this.init();
-    }
-
-    private init(): void {
-        this.addState('idle', new IdleState());
-    }
-}
-
+import { State } from '../../../state-machine/state';
+import { PlayerControllerInput } from '../player.input';
+import { PlayerStateMachine } from '../player.fsm';
 
 export class IdleState extends State {
     constructor() {
@@ -47,9 +28,9 @@ export class IdleState extends State {
         }
     }
 
-    public update(timeElapsed: number, input: PlayerControllerInput): void {
+    public update(_timeElapsed: number, input: PlayerControllerInput): void {
         if (input.keys.up || input.keys.down) {
-            // this.parent.setState('walk');
+            this.parent.setState('walk');
         } else if (input.keys.space) {
             // this.parent.setState('attack');
         }
