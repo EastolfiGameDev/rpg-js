@@ -19,7 +19,7 @@ export class ThirdPersonCamera extends Component {
         // do nothing
     }
 
-    protected update(timeElapsed: number): void {
+    public update(timeElapsed: number): void {
         const idealOffset = this.calculateIdealOffset();
         const idealLookat = this.calculateIdealLookat();
 

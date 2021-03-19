@@ -3,9 +3,11 @@ import { Entity } from './entity';
 export abstract class Component {
     public name: string;
 
-    private parent: Entity = null;
+    protected parent: Entity = null;
 
     public abstract initComponent(): void;
+
+    public abstract update(_timeElapsed: number): void;
 
     public setParent(parent: Entity) {
         this.parent = parent;
@@ -15,5 +17,7 @@ export abstract class Component {
         this.parent.registerHandler();
     }
 
-    protected abstract update(_timeElapsed: number): void;
+    public getComponent(name: string): Component {
+        return this.parent.getComponent(name);
+    }
 }

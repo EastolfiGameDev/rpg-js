@@ -1,8 +1,13 @@
+import { PlayerControllerInput } from '../entities/player/player.input';
 import { State } from './state';
 
 export class FiniteStateMachine {
     private states: { [name: string]: State } = {};
     private _currentState: State = null;
+
+    public get currentState(): State {
+        return this._currentState;
+    }
 
     public setState(name: string): void {
         const previousState = this._currentState;
@@ -23,8 +28,10 @@ export class FiniteStateMachine {
         state.enter(previousState);
     }
 
-    public get currentState(): State {
-        return this._currentState;
+    public update(timeElapsed: number, input: PlayerControllerInput): void {
+        if (this._currentState) {
+            this._currentState.update(timeElapsed, input);
+        }
     }
 
     protected addState(name: string, state: State): void {

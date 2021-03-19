@@ -2,6 +2,7 @@ import { FiniteStateMachine } from '../../state-machine/fsm';
 import { State } from '../../state-machine/state';
 
 import { PlayerControllerProxy } from './player.controller';
+import { PlayerControllerInput } from './player.input';
 
 export class PlayerStateMachine extends FiniteStateMachine {
     public proxy: PlayerControllerProxy;
@@ -46,8 +47,12 @@ export class IdleState extends State {
         }
     }
 
-    public update(): void {
-        //
+    public update(timeElapsed: number, input: PlayerControllerInput): void {
+        if (input.keys.up || input.keys.down) {
+            // this.parent.setState('walk');
+        } else if (input.keys.space) {
+            // this.parent.setState('attack');
+        }
     }
 
     public exit(): void {

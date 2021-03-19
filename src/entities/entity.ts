@@ -15,9 +15,13 @@ export class Entity {
     public addComponent(component: Component): void {
         component.setParent(this);
 
-        this.components[component.name] = component;
+        this.components[component.constructor.name] = component;
 
         component.initComponent();
+    }
+
+    public getComponent(name: string): Component {
+        return this.components[name];
     }
 
     public setName(name: string): void {
@@ -37,4 +41,21 @@ export class Entity {
             this.components[key].update(timeElapsed);
         }
     }
+
+    public setPosition(position: Vector3): void {
+        this.position.copy(position);
+        // this.Broadcast({
+        //     topic: 'update.position',
+        //     value: this._position,
+        // });
+    }
+
+    // SetQuaternion
+    public setRotation(rotation: Quaternion): void {
+        this.rotation.copy(rotation);
+        // this.Broadcast({
+        //     topic: 'update.rotation',
+        //     value: this._rotation,
+        // });
+      }
 }

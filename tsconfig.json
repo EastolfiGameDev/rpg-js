@@ -11,7 +11,8 @@
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
         "strictNullChecks": false,
-        "sourceMap": true
+        "sourceMap": true,
+        "lib": ["es5", "dom", "es2015.core"]
     },
     "include": [
         "src/**/*.ts",
