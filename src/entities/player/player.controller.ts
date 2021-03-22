@@ -1,7 +1,8 @@
 import { Scene, Group, Vector3, PerspectiveCamera, SkinnedMesh, Bone, Object3D, sRGBEncoding, AnimationMixer, LoadingManager, AnimationClip, AnimationAction, Quaternion } from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 
-import { Component } from '../component';
+import { Component } from 'core/entities/component';
+
 import { PlayerControllerInput } from './player.input';
 import { PlayerStateMachine } from './player.fsm';
 

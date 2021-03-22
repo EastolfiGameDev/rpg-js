@@ -1,5 +1,6 @@
-import { PerspectiveCamera, Ray } from "three";
-import { Component } from "../component";
+import { PerspectiveCamera } from "three";
+
+import { Component } from 'core/entities/component';
 
 enum Keys {
     W = 87, A = 65, S = 83, D = 68,

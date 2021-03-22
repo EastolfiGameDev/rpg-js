@@ -1,6 +1,7 @@
-import { PerspectiveCamera, Vector, Vector3 } from "three";
-import { Component } from "../component";
-import { Entity } from "../entity";
+import { PerspectiveCamera, Vector3 } from "three";
+
+import { Component } from 'core/entities/component';
+import { Entity } from 'core/entities/entity';
 
 export class ThirdPersonCamera extends Component {
     private camera: PerspectiveCamera;

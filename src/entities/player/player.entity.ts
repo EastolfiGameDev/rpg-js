@@ -1,8 +1,9 @@
 import { PerspectiveCamera, Scene } from 'three';
-import { Entity } from '../entity';
+
+import { Entity } from 'core/entities/entity';
+
 import { PlayerController } from './player.controller';
 import { PlayerControllerInput } from './player.input';
-
 
 export class PlayerEntity extends Entity {
     constructor(params: { camera: PerspectiveCamera, scene: Scene }) {
