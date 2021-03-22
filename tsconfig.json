@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "rootDir": ".",
+        "baseUrl": "./",
         "incremental": true,
         "target": "es5",
         "module": "commonjs",
@@ -13,10 +14,16 @@
         "strictNullChecks": false,
         "sourceMap": true,
         "lib": ["es5", "dom", "es2015.core"],
-        "experimentalDecorators": true
+        "experimentalDecorators": true,
+        "paths": {
+            "core/*": [ "./core/*" ],
+            "server/*": [ "./server/*" ],
+            "client/*": [ "./client/*" ]
+        }
     },
     "include": [
         "src/**/*.ts",
+        "client/**/*.ts",
         "server/**/*.ts",
         "tests/**/*.spec.ts"
     ],

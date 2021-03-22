@@ -7,6 +7,11 @@
         "staticPath": "static",
         "watcherGlob": "**"
     },
+    "alias": {
+        "core": "./core",
+        "server": "./server",
+        "client": "./client"
+    },
     "scripts": {
         "start": "parcel -p 3000 index.html",
         "start:mmo": "parcel -p 3001 client/index.html",

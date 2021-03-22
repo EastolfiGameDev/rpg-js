@@ -1,8 +1,10 @@
-import { AnimationAction, AnimationClip, AnimationMixer, BooleanKeyframeTrack, Color, Group, Object3D, Scene, Vector2, Vector3 } from 'three';
+import { AnimationAction, AnimationClip, AnimationMixer, Color, Group, Object3D, Scene, Vector3 } from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
-import { Component } from '../entities/component';
-import { Entity } from '../entities/entity';
-import { EntityManager } from '../entities/entity.manager';
+
+import { Entity } from 'core/entities/entity';
+import { Component } from 'core/entities/component';
+import { EntityManager } from 'core/entities/entity.manager';
+import { ThreeJSController } from 'core/game/three-js.controller';
 
 export class MathUtils {
     public static randRange(start: number, end: number): number {
@@ -148,7 +150,9 @@ export class WorldManager {
         'PineTree'
     ];
 
-    public addFoliage(scene: Scene, entityManager: EntityManager): void {
+    public addFoliage(): void {
+        const { scene } = EntityManager.instance.get('threejs').getComponent('ThreeJSController') as ThreeJSController;
+
         for (let i = 0; i < this.FOLIAGE_COUNT; i++) {
             const name = this.FOLIAGE_NAMES[MathUtils.randInt(0, this.FOLIAGE_NAMES.length - 1)];
             const index = MathUtils.randInt(1, 5);
@@ -172,7 +176,7 @@ export class WorldManager {
             }));
 
             entity.setPosition(position);
-            entityManager.add(entity);
+            EntityManager.instance.add(entity);
             entity.activate(false);
         }
     }
