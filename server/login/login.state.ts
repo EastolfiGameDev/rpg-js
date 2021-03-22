@@ -1,9 +1,11 @@
-import { Event, FiniteStateMachine } from './fsm';
+import { SocketEvent } from 'core/events/socket.event';
+
+import { FiniteStateMachine } from './fsm';
 
 export abstract class State {
     public parent: FiniteStateMachine;
 
-    public broadcast(event: Event): void {
+    public broadcast(event: SocketEvent): void {
         this.parent.broadcast(event);
     }
 
@@ -30,7 +32,9 @@ export class LoginAwait extends State {
             return false;
         }
 
-        this.parent.setState(new LoginConfirm({ accountName: data }))
+        this.parent.setState(new LoginConfirm({ accountName: data }));
+
+        return true;
     }
 }
 
@@ -45,7 +49,7 @@ export class LoginConfirm extends State {
 
     public enter(_previous: State): void {
         console.log('login confirmed: ' + this.accountName);
-        this.broadcast({topic: 'login.complete'/*, params: this.params_*/ });
+        this.broadcast({topic: 'login.complete', params: { accountName: this.accountName } });
     }
 
     public exit(): void {

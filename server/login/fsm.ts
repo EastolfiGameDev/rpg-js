@@ -1,11 +1,8 @@
+import { SocketEvent } from 'core/events/socket.event';
+
 import { State } from './login.state';
 
-export interface Event {
-    topic: string;
-    params?: any;
-}
-
-export declare type OnLoginFunction = (event: Event) => void;
+export declare type OnLoginFunction = (event: SocketEvent) => void;
 
 export class FiniteStateMachine {
     private currentState: State = null;
@@ -19,7 +16,7 @@ export class FiniteStateMachine {
         return this.currentState;
     }
 
-    public broadcast(event: Event): void {
+    public broadcast(event: SocketEvent): void {
         this.onEvent(event);
     }
 

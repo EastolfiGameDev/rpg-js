@@ -1,11 +1,12 @@
 import { Socket, io } from 'socket.io-client';
 
-import { Component } from '../entities/component';
+import { Component } from '../../../core/entities/component';
+import { Entity } from '../../../core/entities/entity';
 import { getAccountName } from '../web-components/login.component';
 
 export class NetworkController extends Component {
     private readonly SOCKET_URL = 'ws://localhost:3000';
-    private playerId = null;
+    // private playerId = null;
     private socket: Socket;
 
     constructor() {
@@ -18,7 +19,7 @@ export class NetworkController extends Component {
         // throw new Error('Method not implemented.');
     }
 
-    protected update(_timeElapsed: number): void {
+    public update(_timeElapsed: number): void {
         // throw new Error('Method not implemented.');
     }
 
@@ -40,26 +41,41 @@ export class NetworkController extends Component {
             console.log('DISCONNECTED: ' + this.socket.id); // undefined
         });
 
-        this.socket.onAny((event, data) => {
-            debugger;
+        this.socket.onAny((topic: string, data: string) => {
+            this.onMessage(topic, data);
         });
     }
 
-    private generateRandomName(): string {
-      const names1 = [
-          'Aspiring', 'Nameless', 'Cautionary', 'Excited',
-          'Modest', 'Maniacal', 'Caffeinated', 'Sleepy',
-          'Passionate', 'Medical',
-      ];
-      const names2 = [
-          'Painter', 'Cheese Guy', 'Giraffe', 'Snowman',
-          'Doberwolf', 'Cocktail', 'Fondler', 'Typist',
-          'Noodler', 'Arborist', 'Peeper'
-      ];
+    private onMessage(topic: string, data: string): void {
+        // world.player
+        // world.update
+        // chat.message
+        // world.inventory
+    }
 
-      const n1 = names1[ Math.floor(Math.random() * names1.length) ];
-      const n2 = names2[ Math.floor(Math.random() * names2.length) ];
+    // private generateRandomName(): string {
+    //   const names1 = [
+    //       'Aspiring', 'Nameless', 'Cautionary', 'Excited',
+    //       'Modest', 'Maniacal', 'Caffeinated', 'Sleepy',
+    //       'Passionate', 'Medical',
+    //   ];
+    //   const names2 = [
+    //       'Painter', 'Cheese Guy', 'Giraffe', 'Snowman',
+    //       'Doberwolf', 'Cocktail', 'Fondler', 'Typist',
+    //       'Noodler', 'Arborist', 'Peeper'
+    //   ];
 
-      return `${n1} ${n2}`;
+    //   const n1 = names1[ Math.floor(Math.random() * names1.length) ];
+    //   const n2 = names2[ Math.floor(Math.random() * names2.length) ];
+
+    //   return `${n1} ${n2}`;
+    // }
+
+    public static createNetworkEntity(): Entity {
+        const network = new Entity();
+
+        network.addComponent(new NetworkController());
+
+        return network;
     }
 }

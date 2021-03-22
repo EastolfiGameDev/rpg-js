@@ -18,13 +18,14 @@
         "paths": {
             "core/*": [ "./core/*" ],
             "server/*": [ "./server/*" ],
-            "client/*": [ "./client/*" ]
+            "rpg/*": [ "./rpg/*" ],
+            "mmo/*": [ "./mmo/*" ]
         }
     },
     "include": [
-        "src/**/*.ts",
-        "client/**/*.ts",
         "server/**/*.ts",
+        "rpg/**/*.ts",
+        "mmo/**/*.ts",
         "tests/**/*.spec.ts"
     ],
     "exclude": []

@@ -1,18 +1,20 @@
 import { performance } from 'perf_hooks';
 import { Server, Socket } from 'socket.io';
+
+import { SocketEvent } from 'core/events/socket.event';
+
 import { Client } from '../client/client';
 import { SocketWrapper } from '../client/socket.wrapper';
 import { LoginQueue } from '../login/login.queue';
 import { WorldManager } from './world.manager';
 import { LogMethod } from '../logger';
-import { Event } from '../login/fsm';
 
 export class WorldServer {
     private worldManager: WorldManager;
     private loginQueue: LoginQueue;
 
     constructor(io: Server) {
-        this.loginQueue = new LoginQueue((client: Client, params: Event) => this.onLogin(client, params));
+        this.loginQueue = new LoginQueue((client: Client, params: SocketEvent) => this.onLogin(client, params));
         this.worldManager = new WorldManager();
 
         this.initSocket(io);
@@ -41,7 +43,7 @@ export class WorldServer {
     }
 
     @LogMethod()
-    private onLogin(client: Client, params: Event): void {
+    private onLogin(client: Client, params: SocketEvent): void {
         this.worldManager.add(client, params);
     }
 

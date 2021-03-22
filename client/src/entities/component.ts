@@ -1,19 +1,19 @@
-import { Entity } from './entity';
+// import { Entity } from './entity';
 
-export abstract class Component {
-    public name: string;
+// export abstract class Component {
+//     public name: string;
 
-    private parent: Entity = null;
+//     private parent: Entity = null;
 
-    public abstract initComponent(): void;
+//     public abstract initComponent(): void;
 
-    public setParent(parent: Entity) {
-        this.parent = parent;
-    }
+//     public setParent(parent: Entity) {
+//         this.parent = parent;
+//     }
 
-    public registerHandler(): void {
-        this.parent.registerHandler();
-    }
+//     public registerHandler(): void {
+//         this.parent.registerHandler();
+//     }
 
-    protected abstract update(_timeElapsed: number): void;
-}
+//     protected abstract update(_timeElapsed: number): void;
+// }

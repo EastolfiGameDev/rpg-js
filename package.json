@@ -10,11 +10,12 @@
     "alias": {
         "core": "./core",
         "server": "./server",
-        "client": "./client"
+        "rpg": "./rpg",
+        "mmo": "./mmo"
     },
     "scripts": {
-        "start": "parcel -p 3000 index.html",
-        "start:mmo": "parcel -p 3001 client/index.html",
+        "start:rpg": "parcel -p 3000 rpg/index.html",
+        "start:mmo": "parcel -p 3001 mmo/index.html",
         "build": "npm run build:clean && npm run build:tsc && npm run parcel",
         "build:clean": "npx rimraf -rf dist",
         "build:tsc": "tsc",

@@ -1,12 +1,6 @@
 import { Socket } from 'socket.io';
 import { Client } from './client';
 
-// common
-interface Event {
-    topic: string;
-    params: string;
-}
-
 export class SocketWrapper implements Client {
     public onMessage: (topic: string, data: string) => boolean = null;
 

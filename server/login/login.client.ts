@@ -1,6 +1,8 @@
+import { SocketEvent } from 'core/events/socket.event';
+
 import { Client } from '../client/client';
 
-import { Event, FiniteStateMachine, OnLoginFunction } from './fsm';
+import { FiniteStateMachine, OnLoginFunction } from './fsm';
 import { LoginAwait } from './login.state';
 
 export class LoginClient {
@@ -12,12 +14,12 @@ export class LoginClient {
 
         client.onMessage = (topic: string, data: string) => this.onMessage(topic, data);
 
-        this.fsm = new FiniteStateMachine((event: Event) => this.onEvent(event));
+        this.fsm = new FiniteStateMachine((event: SocketEvent) => this.onEvent(event));
         this.fsm.setState(new LoginAwait());
     }
 
-    private onEvent(event: Event): void {
-        this.onLogin(event.params);
+    private onEvent(event: SocketEvent): void {
+        this.onLogin(event/*.params*/);
     }
 
     private onMessage(topic: string, data: string): boolean {

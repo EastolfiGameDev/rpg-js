@@ -1,10 +1,16 @@
 import { Broadcast } from '../event/broadcast';
+import { show as showGameUI } from './game-ui.component';
 
+// IDs
+const container = 'login-ui';
 const accountInput = 'login-input';
 const logginButton = 'login-button';
 
+// Classes
+const fadedOut = 'fade-out';
+
 const template = `
-<div class="ui" id="login-ui">
+<div class="ui" id="${container}">
     <div class="login-screen">
     <div class="login-screen-layout">
         <div class="login-screen-layout window">
@@ -28,6 +34,17 @@ class LoginComponent extends HTMLElement {
 
 export function getAccountName(): string {
     return (document.getElementById(accountInput) as HTMLInputElement).value;
+}
+
+export function fadeOut(): void {
+    const loginContainer = document.getElementById(container);
+
+    if (loginContainer.classList.contains(fadedOut)) {
+        return;
+    }
+
+    loginContainer.classList.toggle(fadedOut);
+    showGameUI();
 }
 
 customElements.define('login-component', LoginComponent);

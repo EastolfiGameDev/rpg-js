@@ -42,7 +42,7 @@ body {
   background-size: cover;
 }
 
-.ui.fadeOut {
+.ui.fade-out {
   opacity: 1.0;
   animation: fadeOut 1s ease-in-out forwards;
 }
