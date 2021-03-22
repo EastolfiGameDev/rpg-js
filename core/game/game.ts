@@ -1,6 +1,5 @@
 import { EntityManager } from 'core/entities/entity.manager';
-
-import { ThreeJSController } from './three-js.controller';
+import { ThreeJSController } from 'core/game/three-js.controller';
 
 export abstract class Game {
     private delta: number = -1;
