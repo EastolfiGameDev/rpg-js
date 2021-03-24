@@ -1,17 +1,17 @@
-import { SocketEvent } from 'core/events/socket.event';
+import { BroadcastParam } from 'core/events/broadcast';
 
 import { FiniteStateMachine } from './fsm';
 
 export abstract class State {
     public parent: FiniteStateMachine;
 
-    public broadcast(event: SocketEvent): void {
+    public broadcast(event: BroadcastParam): void {
         this.parent.broadcast(event);
     }
 
     public abstract enter(previous: State): void;
     public abstract exit(): void;
-    public abstract onMessage(event: string, data: string): boolean;
+    public abstract onMessage(event: string, data: BroadcastParam): boolean;
 }
 
 export class LoginAwait extends State {
@@ -27,12 +27,12 @@ export class LoginAwait extends State {
         // do nothing
     }
 
-    public onMessage(event: string, data: string): boolean {
+    public onMessage(event: string, data: BroadcastParam): boolean {
         if (event !== 'login.commit') {
             return false;
         }
 
-        this.parent.setState(new LoginConfirm({ accountName: data }));
+        this.parent.setState(new LoginConfirm({ accountName: 'data' }));
 
         return true;
     }
@@ -56,7 +56,7 @@ export class LoginConfirm extends State {
         // do nothing
     }
 
-    public onMessage(_event: string, _data: string): boolean {
+    public onMessage(_event: string, _data: BroadcastParam): boolean {
         return true;
     }
 }

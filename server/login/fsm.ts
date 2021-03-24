@@ -1,8 +1,8 @@
-import { SocketEvent } from 'core/events/socket.event';
+import { BroadcastParam } from 'core/events/broadcast';
 
 import { State } from './login.state';
 
-export declare type OnLoginFunction = (event: SocketEvent) => void;
+export declare type OnLoginFunction = (event: BroadcastParam) => void;
 
 export class FiniteStateMachine {
     private currentState: State = null;
@@ -16,11 +16,11 @@ export class FiniteStateMachine {
         return this.currentState;
     }
 
-    public broadcast(event: SocketEvent): void {
+    public broadcast(event: BroadcastParam): void {
         this.onEvent(event);
     }
 
-    public onMessage(topic: string, data: string): boolean {
+    public onMessage(topic: string, data: BroadcastParam): boolean {
         return this.currentState.onMessage(topic, data);
     }
 

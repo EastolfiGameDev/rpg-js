@@ -1,17 +1,42 @@
 import { Vector3, Quaternion, Object3D } from 'three';
 
+import { Message, MessageHandler } from 'core/events/broadcast';
+
 import { Component } from './component';
 import { EntityManager } from './entity.manager';
 
 export class Entity {
-    public position = new Vector3();
-    public rotation = new Quaternion();
     public mesh: Object3D;
 
+    private _position = new Vector3();
+    private _rotation = new Quaternion();
     private name: string = null;
-    // private parent: /*Entity | */EntityManager = null;
     private components: {[name: string]: Component} = {};
-    private handlers = {};
+    private handlers: { [name: string]: MessageHandler<any>[] } = {};
+
+    public get position(): Vector3 {
+        return this._position;
+    }
+
+    public set position(position: Vector3) {
+        this._position.copy(position);
+        this.broadcast({
+            topic: 'update.position',
+            value: this._position,
+        });
+    }
+
+    public get rotation(): Quaternion {
+        return this._rotation;
+    }
+
+    public set rotation(rotation: Quaternion) {
+        this._rotation.copy(rotation);
+        this.broadcast({
+            topic: 'update.rotation',
+            value: this._rotation,
+        });
+    }
 
     public addComponent(component: Component): void {
         component.setParent(this);
@@ -29,12 +54,30 @@ export class Entity {
         this.name = name;
     }
 
-    // public setParent(parent: /*Entity | */EntityManager): void {
-    //     this.parent = parent;
-    // }
+    public broadcast(message: Message<any>): void {
+        if (!(message.topic in this.handlers)) {
+            return
+        }
 
-    public registerHandler(): void {
-        //
+        for (let handler of this.handlers[message.topic]) {
+            handler(message);
+        }
+    }
+
+    public registerHandler(name: string, handler: MessageHandler<any>): void {
+        if (!this.handlers[name]) {
+            this.handlers[name] = [];
+        }
+
+        this.handlers[name].push(handler);
+    }
+
+    public activate(b: boolean): void {
+        EntityManager.instance.activate(this, b);
+    }
+
+    public findEntity(name: string): Entity {
+        return EntityManager.instance.get(name);
     }
 
     public update(timeElapsed: number) {
@@ -43,29 +86,18 @@ export class Entity {
         }
     }
 
-    public activate(b: boolean): void {
-        EntityManager.instance.activate(this, b);
+    public initEntity(): void {
+        for (let key in this.components) {
+            this.components[key].initEntity();
+        }
     }
 
-    public setPosition(position: Vector3): void {
-        this.position.copy(position);
-        // this.Broadcast({
-        //     topic: 'update.position',
-        //     value: this._position,
-        // });
-    }
+    public destroy(): void {
+        for (let key in this.components) {
+            this.components[key].destroy();
+        }
 
-    // SetQuaternion
-    public setRotation(rotation: Quaternion): void {
-        this.rotation.copy(rotation);
-        // this.Broadcast({
-        //     topic: 'update.rotation',
-        //     value: this._rotation,
-        // });
-    }
-
-    public findEntity(name: string): Entity {
-        return EntityManager.instance.get(name);
-        // return this.parent.get(name);
+        this.components = null;
+        this.handlers = null;
     }
 }

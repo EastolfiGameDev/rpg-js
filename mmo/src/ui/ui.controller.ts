@@ -1,7 +1,7 @@
-import { Component } from '../../../core/entities/component';
-import { Entity } from '../../../core/entities/entity';
+import { Component } from 'core/entities/component';
+import { Entity } from 'core/entities/entity';
 
-import { fadeOut as fadeOutLogin } from '../web-components/login.component';
+import { fadeOut as fadeOutLogin } from '../web-components/account/login.component';
 
 export class UIController extends Component {
     constructor() {
@@ -12,6 +12,12 @@ export class UIController extends Component {
         // icon bar
         // quests
         // chat
+    }
+    public initEntity(): void {
+        // do nothing
+    }
+    public destroy(): void {
+        // do nothing
     }
 
     public update(_timeElapsed: number): void {

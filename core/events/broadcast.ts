@@ -2,6 +2,17 @@ declare type EventCallback = (...params: any) => void;
 
 const events: { [event: string]: EventCallback[] } = {};
 
+export interface Message<T extends BroadcastParam> {
+    topic: string;
+    value: T;
+}
+
+export interface BroadcastParam {
+    [param: string]: any;
+}
+
+export declare type MessageHandler<T extends BroadcastParam> = (message: Message<T>) => void;
+
 export class Broadcast {
 
     public static emit(event: string, ...params: any): void {
@@ -13,10 +24,10 @@ export class Broadcast {
     }
 
     public static on(event: string, callback: EventCallback): void {
-        const callbacks = events[event] || [];
+        if (!events[event]) {
+            events[event] = [];
+        }
 
-        callbacks.push(callback);
-
-        events[event] = callbacks;
+        events[event].push(callback);
     }
 }

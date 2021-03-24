@@ -19,6 +19,12 @@ export class ThirdPersonCamera extends Component {
     public initComponent(): void {
         // do nothing
     }
+    public initEntity(): void {
+        // do nothing
+    }
+    public destroy(): void {
+        // do nothing
+    }
 
     public update(timeElapsed: number): void {
         const idealOffset = this.calculateIdealOffset();

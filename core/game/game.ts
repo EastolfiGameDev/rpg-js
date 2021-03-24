@@ -1,5 +1,6 @@
 import { EntityManager } from 'core/entities/entity.manager';
 import { ThreeJSController } from 'core/game/three-js.controller';
+import { SpawnController } from 'mmo/src/spawner/spawn.controller';
 
 export abstract class Game {
     private delta: number = -1;
@@ -29,6 +30,7 @@ export abstract class Game {
         const entityManager = EntityManager.instance;
 
         entityManager.add(ThreeJSController.createThreeJsEntity(), 'threejs');
+        entityManager.add(SpawnController.createSpawnerEntity(/*{ grid: this.grid_, }*/), 'spawners');
     }
 
     private process() {

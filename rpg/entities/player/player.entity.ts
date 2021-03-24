@@ -1,19 +1,17 @@
-import { PerspectiveCamera, Scene } from 'three';
-
 import { Entity } from 'core/entities/entity';
 
 import { PlayerController } from './player.controller';
 import { PlayerControllerInput } from './player.input';
 
 export class PlayerEntity extends Entity {
-    constructor(params: { camera: PerspectiveCamera, scene: Scene }) {
+    constructor() {
         super();
 
-        this.init(params);
+        this.init();
     }
 
-    private init(params: { camera: PerspectiveCamera, scene: Scene }): void {
-        this.addComponent(new PlayerControllerInput({ camera: params.camera }));
-        this.addComponent(new PlayerController(params))
+    private init(): void {
+        this.addComponent(new PlayerControllerInput());
+        this.addComponent(new PlayerController())
     }
 }

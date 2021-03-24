@@ -1,6 +1,8 @@
 import { PerspectiveCamera } from "three";
 
 import { Component } from 'core/entities/component';
+import { ThreeJSController } from 'core/game/three-js.controller';
+import { EntityManager } from 'core/entities/entity.manager';
 
 enum Keys {
     W = 87, A = 65, S = 83, D = 68,
@@ -19,15 +21,22 @@ export class PlayerControllerInput extends Component {
 
     private camera: PerspectiveCamera;
 
-    constructor(params: { camera: PerspectiveCamera }) {
+    constructor() {
         super();
 
-        this.camera = params.camera;
+        const { camera } = EntityManager.instance.get('threejs').getComponent('ThreeJSController') as ThreeJSController;
+        this.camera = camera;
 
         this.init();
     }
 
     public initComponent(): void {
+        // do nothing
+    }
+    public initEntity(): void {
+        // do nothing
+    }
+    public destroy(): void {
         // do nothing
     }
 

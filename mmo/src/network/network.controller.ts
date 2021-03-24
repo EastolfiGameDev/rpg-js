@@ -1,8 +1,12 @@
 import { Socket, io } from 'socket.io-client';
 
-import { Component } from '../../../core/entities/component';
-import { Entity } from '../../../core/entities/entity';
-import { getAccountName } from '../web-components/login.component';
+import { BroadcastParam } from 'core/events/broadcast';
+import { Component } from 'core/entities/component';
+import { Entity } from 'core/entities/entity';
+import { PlayerBundle } from 'server/world/world.entity';
+import { getAccountName } from 'mmo/src/web-components/account/login.component';
+
+import { PlayerSpawner } from '../spawner/player.spawner';
 
 export class NetworkController extends Component {
     private readonly SOCKET_URL = 'ws://localhost:3000';
@@ -17,6 +21,12 @@ export class NetworkController extends Component {
 
     public initComponent(): void {
         // throw new Error('Method not implemented.');
+    }
+    public initEntity(): void {
+        // do nothing
+    }
+    public destroy(): void {
+        // do nothing
     }
 
     public update(_timeElapsed: number): void {
@@ -41,12 +51,25 @@ export class NetworkController extends Component {
             console.log('DISCONNECTED: ' + this.socket.id); // undefined
         });
 
-        this.socket.onAny((topic: string, data: string) => {
+        this.socket.onAny((topic: string, data: BroadcastParam) => {
             this.onMessage(topic, data);
         });
     }
 
-    private onMessage(topic: string, data: string): void {
+    private onMessage(topic: string, data: BroadcastParam): void {
+        if (topic === 'world.player') {
+            const spawner = this.findEntity('spawners').getComponent('PlayerSpawner') as PlayerSpawner;
+
+            const d = data as PlayerBundle;
+            const player = spawner.spawn(d.description);
+
+            player.broadcast({
+                topic: 'network.update',
+                value: {
+                    transform: d.transform
+                },
+            });
+        }
         // world.player
         // world.update
         // chat.message

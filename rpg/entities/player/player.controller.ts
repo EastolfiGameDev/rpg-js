@@ -2,6 +2,8 @@ import { Scene, Group, Vector3, PerspectiveCamera, SkinnedMesh, Bone, Object3D, 
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 
 import { Component } from 'core/entities/component';
+import { EntityManager } from 'core/entities/entity.manager';
+import { ThreeJSController } from 'core/game/three-js.controller';
 
 import { PlayerControllerInput } from './player.input';
 import { PlayerStateMachine } from './player.fsm';
@@ -41,17 +43,24 @@ export class PlayerController extends Component {
     private mixer: AnimationMixer;
     private manager: LoadingManager;
 
-    constructor(params: { camera: PerspectiveCamera, scene: Scene }) {
+    constructor() {
         super();
 
-        this.camera = params.camera;
-        this.scene = params.scene;
+        const { scene, camera } = EntityManager.instance.get('threejs').getComponent('ThreeJSController') as ThreeJSController;
+        this.camera = camera;
+        this.scene = scene;
 
         this.init();
     }
 
     public initComponent(): void {
-        //
+        // register handler
+    }
+    public initEntity(): void {
+        // do nothing
+    }
+    public destroy(): void {
+        // do nothing
     }
 
     public update(timeElapsed: number): void {
@@ -64,14 +73,12 @@ export class PlayerController extends Component {
 
         this.mixer?.update(timeElapsed);
 
-        // HARDCODED
-        // if (this._stateMachine._currentState._action) {
-        //     this.Broadcast({
-        //       topic: 'player.action',
-        //       action: this._stateMachine._currentState.Name,
-        //       time: this._stateMachine._currentState._action.time,
-        //     });
-        //   }
+        this.broadcast({
+            topic: 'player.action',
+            value: {
+                action: this.stateMachine.currentState.name
+            }
+        })
 
         const currentState = this.stateMachine.currentState;
         if (currentState.name != 'walk' &&
@@ -144,11 +151,14 @@ export class PlayerController extends Component {
         //     return;
         // }
 
+        // const terrain = this.FindEntity('terrain').GetComponent('TerrainChunkManager');
+        // pos.y = terrain.GetHeight(pos)[0];
+
         controlObject.position.copy(pos);
         this.position.copy(pos);
 
-        this.parent.setPosition(this.position);
-        this.parent.setRotation(this.target.quaternion);
+        this.parent.position = this.position;
+        this.parent.rotation = this.target.quaternion;
     }
 
     private init(): void {

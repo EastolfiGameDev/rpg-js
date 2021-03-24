@@ -1,8 +1,8 @@
 import { EntityManager } from 'core/entities/entity.manager';
 import { ThreeJSController } from 'core/game/three-js.controller';
 import { Game } from 'core/game/game';
+import { Broadcast } from 'core/events/broadcast';
 
-import { Broadcast } from '../event/broadcast';
 import { GuiManager } from '../gui/gui.manager';
 import { NetworkController } from '../network/network.controller';
 import { SpawnController } from '../spawner/spawn.controller';
@@ -35,11 +35,5 @@ export class MmoGame extends Game {
 
         entityManager.add(UIController.createUIEntity(), 'ui');
         entityManager.add(NetworkController.createNetworkEntity(), 'network');
-
-        const { scene, camera } = entityManager.get('threejs').getComponent('ThreeJSController') as ThreeJSController;
-        entityManager.add(SpawnController.createSpawnerEntity({
-            // grid: this.grid_,
-            scene, camera
-        }), 'spawners');
     }
 }

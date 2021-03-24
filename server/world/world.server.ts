@@ -1,7 +1,7 @@
 import { performance } from 'perf_hooks';
 import { Server, Socket } from 'socket.io';
 
-import { SocketEvent } from 'core/events/socket.event';
+import { BroadcastParam } from 'core/events/broadcast';
 
 import { Client } from '../client/client';
 import { SocketWrapper } from '../client/socket.wrapper';
@@ -14,7 +14,7 @@ export class WorldServer {
     private loginQueue: LoginQueue;
 
     constructor(io: Server) {
-        this.loginQueue = new LoginQueue((client: Client, params: SocketEvent) => this.onLogin(client, params));
+        this.loginQueue = new LoginQueue((client: Client, params: BroadcastParam) => this.onLogin(client, params));
         this.worldManager = new WorldManager();
 
         this.initSocket(io);
@@ -43,7 +43,7 @@ export class WorldServer {
     }
 
     @LogMethod()
-    private onLogin(client: Client, params: SocketEvent): void {
+    private onLogin(client: Client, params: BroadcastParam): void {
         this.worldManager.add(client, params);
     }
 

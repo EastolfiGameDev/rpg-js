@@ -74,6 +74,12 @@ export class ThreeJSController extends Component {
         this.initScene();
         this.initWorld();
     }
+    public initEntity(): void {
+        // do nothing
+    }
+    public destroy(): void {
+        // do nothing
+    }
 
     public update(_timeElapsed: number): void {
         this.updateSun();
@@ -182,14 +188,14 @@ export class ThreeJSController extends Component {
     }
 
     private updateSun(): void {
-        const player = EntityManager.instance.get('player');
-        const position = player.position;
+        // const player = EntityManager.instance.get('player');
+        // const position = player.position;
 
-        this.sun.position.copy(position);
-        this.sun.position.add(new Vector3(-10, 500, -10));
-        this.sun.target.position.copy(position);
-        this.sun.updateMatrixWorld();
-        this.sun.target.updateMatrixWorld();
+        // this.sun.position.copy(position);
+        // this.sun.position.add(new Vector3(-10, 500, -10));
+        // this.sun.target.position.copy(position);
+        // this.sun.updateMatrixWorld();
+        // this.sun.target.updateMatrixWorld();
     }
 
     private onWindowResize(): void {

@@ -1,4 +1,4 @@
-import { SocketEvent } from 'core/events/socket.event';
+import { BroadcastParam } from 'core/events/broadcast';
 
 import { Client } from '../client/client';
 
@@ -12,17 +12,17 @@ export class LoginClient {
     constructor(client: Client, onLogin: OnLoginFunction) {
         this.onLogin = onLogin;
 
-        client.onMessage = (topic: string, data: string) => this.onMessage(topic, data);
+        client.onMessage = (topic: string, data: BroadcastParam) => this.onMessage(topic, data);
 
-        this.fsm = new FiniteStateMachine((event: SocketEvent) => this.onEvent(event));
+        this.fsm = new FiniteStateMachine((event: BroadcastParam) => this.onEvent(event));
         this.fsm.setState(new LoginAwait());
     }
 
-    private onEvent(event: SocketEvent): void {
+    private onEvent(event: BroadcastParam): void {
         this.onLogin(event/*.params*/);
     }
 
-    private onMessage(topic: string, data: string): boolean {
+    private onMessage(topic: string, data: BroadcastParam): boolean {
         return this.fsm.onMessage(topic, data);
     }
 }

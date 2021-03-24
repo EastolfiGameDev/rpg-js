@@ -62,6 +62,12 @@ export class StaticModel extends Component {
     public initComponent(): void {
         // this.registerHandler
     }
+    public initEntity(): void {
+        // do nothing
+    }
+    public destroy(): void {
+        // do nothing
+    }
 
     public update(_timeElapsed: number): void {
         // do nothing
@@ -175,7 +181,7 @@ export class WorldManager {
                 castShadow: true,
             }));
 
-            entity.setPosition(position);
+            entity.position = position;
             EntityManager.instance.add(entity);
             entity.activate(false);
         }
