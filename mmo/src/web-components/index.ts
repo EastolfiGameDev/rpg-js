@@ -1,2 +1,2 @@
-import './login.component';
-import './game-ui.component';
+import './account/login.component';
+import './ui/game-ui.component';
