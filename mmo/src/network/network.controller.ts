@@ -5,6 +5,8 @@ import { Component } from 'core/entities/component';
 import { Entity } from 'core/entities/entity';
 import { PlayerBundle } from 'server/world/world.entity';
 import { getAccountName } from 'mmo/src/web-components/account/login.component';
+import { addChatMessage } from 'mmo/src/web-components/ui/chat.component';
+import { ChatMessage } from 'server/world/world.client';
 
 import { PlayerSpawner } from '../spawner/player.spawner';
 
@@ -27,6 +29,10 @@ export class NetworkController extends Component {
     }
     public destroy(): void {
         // do nothing
+    }
+
+    public sendChatMessage(message: string): void {
+        this.socket.emit('chat.message', message);
     }
 
     public update(_timeElapsed: number): void {
@@ -69,10 +75,14 @@ export class NetworkController extends Component {
                     transform: d.transform
                 },
             });
+        } else if (topic === 'chat.message') {
+            const d = data as ChatMessage;
+            addChatMessage({
+                text: d.content,
+                name: d.name
+            });
         }
-        // world.player
         // world.update
-        // chat.message
         // world.inventory
     }
 

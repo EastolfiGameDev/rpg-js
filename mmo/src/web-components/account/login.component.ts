@@ -30,7 +30,7 @@ addWebComponent((factory: WebComponentFactory) => {
             this.innerHTML = template;
 
             document.getElementById(logginButton).onclick = () => {
-                Broadcast.emit('login.commit');
+                Broadcast.emit('init-login.commit');
             };
         }
     }

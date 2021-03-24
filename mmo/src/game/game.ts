@@ -20,9 +20,9 @@ export class MmoGame extends Game {
         super.init();
 
         document.getElementById('login-ui').style.visibility = 'visible';
-        Broadcast.on('login.commit', () => {
+        Broadcast.on('init-login.commit', () => {
             this.guiManager.createGUI();
-            this.startGame()
+            this.startGame();
         });
     }
 

@@ -16,6 +16,9 @@ interface WorldEntityParams {
     id: number;
     position: Vector3;
     rotation: Quaternion;
+    account: {
+        name: string
+    },
     character: {
         // definition: string,
         class: string
@@ -26,9 +29,15 @@ interface WorldEntityParams {
 
 export class WorldEntity {
     private _id: number;
+    private _accountName: string;
 
     constructor(params: WorldEntityParams) {
         this._id = params.id;
+        this._accountName = params.account.name;
+    }
+
+    public get accountName(): string {
+        return this._accountName;
     }
 
     public createPlayerBundle(): PlayerBundle {

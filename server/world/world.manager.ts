@@ -26,6 +26,9 @@ export class WorldManager {
             ),
             // rotation: quat
             rotation: new Quaternion(0, 0, 0, 1),
+            account: {
+                name: 'Manolo'
+            },
             character: {
                 class: randomClass
             }
