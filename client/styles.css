@@ -1,0 +1,170 @@
+body {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: #000000;
+  margin: 0;
+  padding: 0;
+  overscroll-behavior: none;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.ui {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-family: 'IM Fell French Canon', serif;
+}
+
+#game-ui {
+  visibility: hidden;
+}
+
+#login-ui {
+  visibility: hidden;
+}
+
+.login-screen {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  font-family: 'IM Fell French Canon', serif;
+  background-image: url('./resources/background-3.png');
+  background-size: cover;
+}
+
+.ui.fadeOut {
+  opacity: 1.0;
+  animation: fadeOut 1s ease-in-out forwards;
+}
+
+
+
+@keyframes fadeOut {
+  from {
+    opacity: 1.0;
+    visibility: visible;
+  }
+  to {
+    opacity: 0.0;
+    visibility: hidden;
+  }
+}
+
+.login-screen-layout {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-screen-layout.window {
+  height: 400px;
+  width: 500px;
+  border-radius: 5px;
+  border-color: black;
+  border-style: solid;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.login-button {
+  height: 50px;
+  width: 200px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  text-align: center;
+  background-color: rgba(130, 130, 130, 0.5);
+  display: inline-block;
+  font-size: 1.5em;
+  text-shadow: 2px 2px 5px black;
+  color: white;
+  margin: 15px;
+  transition: all 0.2s;
+}
+
+.login-button:hover {
+  color: #000000;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.login-input {
+  background: rgba(0, 0, 0, 0);
+  width: 300px;
+  font-size: 1.5em;
+  text-shadow: 2px 2px 5px black;
+  color: white;
+  margin: 15px;
+}
+
+.login-text {
+  font-size: 2.0em;
+  text-shadow: 2px 2px 5px black;
+  color: white;
+}
+
+
+.chat-ui {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  background: rgba(1.0, 1.0, 1.0, 0.0);
+  width: 400px;
+  height: 200px;
+  padding: 10px 10px;
+  border-radius: 10px;
+}
+
+.chat-ui-text-area {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.chat-text {
+  font-size: .75em;
+  text-shadow: 2px 2px 5px black;
+  color: white;
+}
+
+.chat-text-server {
+  color: rgb(116, 235, 87);
+}
+
+.chat-text-action {
+  color: rgb(247, 20, 20);
+}
+
+.chat-input {
+  background: rgba(0, 0, 0, 0);
+  width: 280px;
+  margin-top: 5px;
+}
+
+
+.quest-ui-layout {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.quest-ui {
+  background: rgba(1.0, 1.0, 1.0, 0.75);
+  padding: 20px 20px;
+  width: 700px;
+}

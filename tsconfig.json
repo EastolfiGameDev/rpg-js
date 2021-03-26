@@ -12,10 +12,12 @@
         "forceConsistentCasingInFileNames": true,
         "strictNullChecks": false,
         "sourceMap": true,
-        "lib": ["es5", "dom", "es2015.core"]
+        "lib": ["es5", "dom", "es2015.core"],
+        "experimentalDecorators": true
     },
     "include": [
         "src/**/*.ts",
+        "server/**/*.ts",
         "tests/**/*.spec.ts"
     ],
     "exclude": []
