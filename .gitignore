@@ -1,0 +1,10 @@
+# Dependencies
+/node_modules
+
+# Build
+/src/**/*.js
+/src/**/*.js.map
+
+/dist
+/tsc-out
+/.cache
