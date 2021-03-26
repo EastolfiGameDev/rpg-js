@@ -25,6 +25,7 @@ export class EntityManager {
 
         // entity.setParent(this);
         entity.setName(name);
+        entity.initEntity();
     }
 
     public get(name: string): Entity {

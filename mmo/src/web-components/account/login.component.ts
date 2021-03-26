@@ -1,4 +1,5 @@
 import { Broadcast } from 'core/events/broadcast';
+import { LoginParam } from 'server/login/login.state';
 
 import { show as showGameUI } from '../ui/game-ui.component';
 import { addWebComponent, WebComponentFactory } from '../factory';
@@ -38,8 +39,10 @@ addWebComponent((factory: WebComponentFactory) => {
     factory('login-component', LoginComponent);
 });
 
-export function getAccountName(): string {
-    return (document.getElementById(accountInput) as HTMLInputElement).value;
+export function getAccountParams(): LoginParam {
+    return {
+        accountName: (document.getElementById(accountInput) as HTMLInputElement).value
+    };
 }
 
 export function fadeOut(): void {

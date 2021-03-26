@@ -1,9 +1,11 @@
 import { EntityManager } from 'core/entities/entity.manager';
 import { ThreeJSController } from 'core/game/three-js.controller';
+import { SpatialHashGrid } from 'core/spatial/spatial-grid';
 import { SpawnController } from 'mmo/src/spawner/spawn.controller';
 
 export abstract class Game {
     private delta: number = -1;
+    private grid: SpatialHashGrid;
 
     constructor() {
         this.init();
@@ -17,6 +19,11 @@ export abstract class Game {
     }
 
     protected startGame(): void {
+        this.grid = new SpatialHashGrid(
+            [[-1000, -1000], [1000, 1000]],
+            [100, 100]
+        );
+
         this.loadControllers();
         this.process();
     }
@@ -30,7 +37,7 @@ export abstract class Game {
         const entityManager = EntityManager.instance;
 
         entityManager.add(ThreeJSController.createThreeJsEntity(), 'threejs');
-        entityManager.add(SpawnController.createSpawnerEntity(/*{ grid: this.grid_, }*/), 'spawners');
+        entityManager.add(SpawnController.createSpawnerEntity(this.grid), 'spawners');
     }
 
     private process() {

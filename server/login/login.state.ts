@@ -14,6 +14,10 @@ export abstract class State {
     public abstract onMessage(event: string, data: BroadcastParam): boolean;
 }
 
+export interface LoginParam extends BroadcastParam {
+    accountName: string;
+}
+
 export class LoginAwait extends State {
     constructor() {
         super();
@@ -32,7 +36,8 @@ export class LoginAwait extends State {
             return false;
         }
 
-        this.parent.setState(new LoginConfirm({ accountName: 'data' }));
+        const d = data as LoginParam;
+        this.parent.setState(new LoginConfirm({ accountName: d.accountName }));
 
         return true;
     }

@@ -9,7 +9,7 @@
             "type": "node",
             "request": "launch",
             "runtimeExecutable": "node",
-            "runtimeArgs": ["--nolazy", "-r", "ts-node/register/transpile-only"],
+            "runtimeArgs": ["--nolazy", "-r", "ts-node/register/transpile-only", "-r", "tsconfig-paths/register"],
             "args": ["server/index.ts"],
             "cwd": "${workspaceRoot}",
             "internalConsoleOptions": "openOnSessionStart",

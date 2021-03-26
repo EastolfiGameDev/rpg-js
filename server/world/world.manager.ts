@@ -1,16 +1,26 @@
-import { Entity } from 'core/entities/entity';
-import { BroadcastParam } from 'core/events/broadcast';
 // import { quat, vec3 } from 'gl-matrix';
 import { Quaternion, Vector3 } from 'three';
+
+import { BroadcastParam } from 'core/events/broadcast';
+import { SpatialHashGrid } from 'core/spatial/spatial-grid';
 
 import { Client } from '../client/client';
 import { WorldNetworkClient } from './world-network.client';
 import { WorldClient } from './world.client';
 import { WorldEntity } from './world.entity';
 
+const TICK_RATE = 0.1;
+
 export class WorldManager {
     private ids = 0;
     private entities: WorldClient[] = [];
+    // private spawners = [];
+    private tickTimer = 0.0;
+    private grid = new SpatialHashGrid([[-4000, -4000], [4000, 4000]], [1000, 1000]);
+
+    constructor() {
+        // terrain
+    }
 
     public add(client: Client, params: BroadcastParam): void {
         const models = ['sorceror', 'paladin'];
@@ -26,6 +36,7 @@ export class WorldManager {
             ),
             // rotation: quat
             rotation: new Quaternion(0, 0, 0, 1),
+            grid: this.grid,
             account: {
                 name: 'Manolo'
             },
@@ -41,6 +52,38 @@ export class WorldManager {
     }
 
     public update(delta: number): void {
+        this.tickClientState(delta);
+        this.updateSpawners(delta);
+        this.updateEntities(delta);
+    }
+
+    private tickClientState(delta: number): void {
+        this.tickTimer += delta;
+
+        if (this.tickTimer < TICK_RATE) {
+            return;
+        }
+
+        this.tickTimer = 0.0;
+
+        for (let i = 0; i < this.entities.length; i++) {
+            const entity = this.entities[0];
+            if (entity instanceof WorldNetworkClient) {
+                entity.updateClientState();
+                // this.entities[i].
+            }
+        }
+    }
+
+    private updateSpawners(delta: number): void {
         //
+    }
+
+    private updateEntities(delta: number): void {
+        for (let i = 0; i < this.entities.length; i++) {
+            const entity = this.entities[i];
+
+            // entity.u
+        }
     }
 }

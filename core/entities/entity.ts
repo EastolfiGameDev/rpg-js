@@ -8,11 +8,21 @@ import { EntityManager } from './entity.manager';
 export class Entity {
     public mesh: Object3D;
 
+    private _id: number;
     private _position = new Vector3();
     private _rotation = new Quaternion();
+
     private name: string = null;
     private components: {[name: string]: Component} = {};
     private handlers: { [name: string]: MessageHandler<any>[] } = {};
+
+    public get id(): number {
+        return this._id;
+    }
+
+    public set id(val: number) {
+        this._id = val;
+    }
 
     public get position(): Vector3 {
         return this._position;
@@ -20,7 +30,7 @@ export class Entity {
 
     public set position(position: Vector3) {
         this._position.copy(position);
-        this.broadcast({
+        this.broadcast<Vector3>({
             topic: 'update.position',
             value: this._position,
         });
@@ -54,7 +64,7 @@ export class Entity {
         this.name = name;
     }
 
-    public broadcast(message: Message<any>): void {
+    public broadcast<T>(message: Message<T>): void {
         if (!(message.topic in this.handlers)) {
             return
         }

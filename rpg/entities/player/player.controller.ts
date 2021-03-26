@@ -1,9 +1,23 @@
-import { Scene, Group, Vector3, PerspectiveCamera, SkinnedMesh, Bone, Object3D, sRGBEncoding, AnimationMixer, LoadingManager, AnimationClip, AnimationAction, Quaternion } from 'three';
+import {
+    Scene,
+    Group,
+    Vector3,
+    PerspectiveCamera,
+    SkinnedMesh,
+    Bone,
+    Object3D,
+    AnimationMixer,
+    LoadingManager,
+    AnimationClip,
+    AnimationAction,
+    Quaternion
+} from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 
 import { Component } from 'core/entities/component';
 import { EntityManager } from 'core/entities/entity.manager';
 import { ThreeJSController } from 'core/game/three-js.controller';
+import { Message } from 'core/events/broadcast';
 
 import { PlayerControllerInput } from './player.input';
 import { PlayerStateMachine } from './player.fsm';
@@ -32,6 +46,7 @@ export class PlayerController extends Component {
     private acceleration = new Vector3(1, 0.125, 50.0);
     private velocity = new Vector3(0, 0, 0);
     private position = new Vector3();
+    private group = new Group();
 
     private target: Group;
     private camera: PerspectiveCamera;
@@ -49,16 +64,18 @@ export class PlayerController extends Component {
         const { scene, camera } = EntityManager.instance.get('threejs').getComponent('ThreeJSController') as ThreeJSController;
         this.camera = camera;
         this.scene = scene;
+    }
 
+    public initEntity(): void {
         this.init();
     }
 
     public initComponent(): void {
-        // register handler
+        // this.registerHandler('health.death')
+        this.registerHandler('update.position', (message: Message<Vector3>) => this.onPositionUpdate(message));
+        this.registerHandler('update.rotation', (message: Message<Quaternion>) => this.onRotationUpdate(message));
     }
-    public initEntity(): void {
-        // do nothing
-    }
+
     public destroy(): void {
         // do nothing
     }
@@ -213,5 +230,17 @@ export class PlayerController extends Component {
             loader.load('Sword And Shield Slash.fbx', (animation: Group) => onAnimationLoad('attack', animation));
             loader.load('Sword And Shield Death.fbx', (animation: Group) => onAnimationLoad('death', animation));
         });
+    }
+
+    private onPositionUpdate(message: Message<Vector3>): void {
+        this.group.position.copy(message.value);
+    }
+
+    private onRotationUpdate(message: Message<Quaternion>): void {
+        this.group.quaternion.copy(message.value);
+    }
+
+    private onDeath(): void {
+        this.stateMachine.setState('death');
     }
 }

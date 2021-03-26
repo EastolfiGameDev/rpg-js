@@ -5,16 +5,7 @@ import { Entity } from 'core/entities/entity';
 import { Component } from 'core/entities/component';
 import { EntityManager } from 'core/entities/entity.manager';
 import { ThreeJSController } from 'core/game/three-js.controller';
-
-export class MathUtils {
-    public static randRange(start: number, end: number): number {
-        return Math.random() * (end - start) + start;
-    }
-
-    public static randInt(start: number, end: number): number {
-        return Math.round(this.randRange(start, end));
-    }
-}
+import { MathUtils } from 'core/utils/math.utils';
 
 export class StaticModel extends Component {
     private scene: Scene;

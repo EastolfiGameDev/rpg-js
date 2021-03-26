@@ -4,7 +4,7 @@ import { BroadcastParam } from 'core/events/broadcast';
 import { Component } from 'core/entities/component';
 import { Entity } from 'core/entities/entity';
 import { PlayerBundle } from 'server/world/world.entity';
-import { getAccountName } from 'mmo/src/web-components/account/login.component';
+import { getAccountParams } from 'mmo/src/web-components/account/login.component';
 import { addChatMessage } from 'mmo/src/web-components/ui/chat.component';
 import { ChatMessage } from 'server/world/world.client';
 
@@ -12,7 +12,7 @@ import { PlayerSpawner } from '../spawner/player.spawner';
 
 export class NetworkController extends Component {
     private readonly SOCKET_URL = 'ws://localhost:3000';
-    // private playerId = null;
+    private playerId: number = null;
     private socket: Socket;
 
     constructor() {
@@ -50,7 +50,7 @@ export class NetworkController extends Component {
             console.log(this.socket.id);
             // const randomName = this.generateRandomName();
             // Input validation is for losers
-            this.socket.emit('login.commit', getAccountName());
+            this.socket.emit('login.commit', getAccountParams());
         });
 
         this.socket.on('disconnect', () => {
@@ -75,6 +75,13 @@ export class NetworkController extends Component {
                     transform: d.transform
                 },
             });
+
+            // broadcast network.inventory
+
+            console.log(`entering world: ${d.id}`);
+            this.playerId = d.id;
+        } else if (topic === 'world.update') {
+            console.log('world.update');
         } else if (topic === 'chat.message') {
             const d = data as ChatMessage;
             addChatMessage({

@@ -7,9 +7,9 @@ export abstract class Component {
 
     protected parent: Entity = null;
 
-    public abstract initComponent(): void;
+        public abstract initEntity(): void;
 
-    public abstract initEntity(): void;
+    public abstract initComponent(): void;
 
     public abstract destroy(): void;
 
